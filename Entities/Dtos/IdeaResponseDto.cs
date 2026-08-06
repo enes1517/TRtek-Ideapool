@@ -12,13 +12,15 @@ namespace Entities.Dtos
         public int UserId { get; set; }
         public string UserFullName { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
-        public string Category { get; set; } = string.Empty;   // enum → string
+        public string Category { get; set; } = string.Empty;
         public string Benefit { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public string Status { get; set; } = string.Empty;     // enum → string
+        public string? DocumentUrl { get; set; } // YENİ EKLENEN ALAN
+        public string Status { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public IdeaEvaluationResponseDto? Evaluation { get; set; }
     }
+
 
 
 }

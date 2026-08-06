@@ -1,9 +1,6 @@
 ﻿using Entities.Enums;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.Models
 {
@@ -16,9 +13,10 @@ namespace Entities.Models
         public IdeaCategory Category { get; set; }
         public string Benefit { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
+        public string? DocumentUrl { get; set; } // YENİ EKLENEN ALAN (PDF Gereksinimi)
         public IdeaStatus Status { get; set; } = IdeaStatus.Beklemede;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public IdeaEvaluation? Evaluation { get; set; }
     }
-
 }
+

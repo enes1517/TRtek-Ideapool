@@ -63,6 +63,19 @@ namespace Services
             };
         }
 
+        public async Task DeactivateUserAsync(int id)
+        {
+            // Exception yerine projedeki NotFoundException kullanıldı
+            var user = await _repo.User.GetUserByIdAsync(id, trackChanges: true)
+                ?? throw new NotFoundException($"Id={id} olan kullanıcı bulunamadı.");
+
+            user.IsActive = false;
+
+            _repo.User.UpdateOneUser(user);
+            await _repo.SaveAsync();
+        }
+
+
         public async Task<List<UserResponseDto>> GetAllUsersAsync()
         {
             var users = await _repo.User.GetAllUsersAsync(trackChanges: false);

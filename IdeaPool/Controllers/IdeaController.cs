@@ -1,9 +1,11 @@
 ﻿using Entities.Dtos;
 using Entities.Enums;
+using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
+using System.Text.Json;
 
 namespace IdeaPool.Controllers
 {
@@ -18,13 +20,18 @@ namespace IdeaPool.Controllers
             int.Parse(User.FindFirst("userId")?.Value ?? "0");
         [HttpGet]
         public async Task<IActionResult> GetAll(
-            [FromQuery] string? title,
-            [FromQuery] IdeaCategory? category,
-            [FromQuery] DateTime? startDate,
-            [FromQuery] int? userId)
+    [FromQuery] string? title,
+    [FromQuery] IdeaCategory? category,
+    [FromQuery] DateTime? startDate,
+    [FromQuery] int? userId,
+    [FromQuery] IdeaParameters ideaParameters)
         {
-            var ideas = await _ideaService.GetFilteredIdeasAsync(title, category, startDate, userId);
-            return Ok(ideas);
+            var pagedResult = await _ideaService.GetFilteredIdeasAsync(title, category, startDate, userId, ideaParameters);
+
+            Response.Headers["X-Pagination"] = JsonSerializer.Serialize(pagedResult.metaData);
+
+            return Ok(pagedResult.ideas);
+
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)

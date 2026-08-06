@@ -1,5 +1,6 @@
 using Entities.Enums;
 using Entities.Models;
+using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Contracts;
 using System;
@@ -21,9 +22,10 @@ namespace Repositories
                 .OrderByDescending(i => i.CreatedAt)
                 .ToListAsync();
 
-        public async Task<List<Idea>> GetFilteredIdeasAsync(string? title, IdeaCategory? category, DateTime? startDate, int? userId, bool trackChanges)
+        public async Task<PagedList<Idea>> GetFilteredIdeasAsync(string? title, IdeaCategory? category, DateTime? startDate, int? userId, IdeaParameters ideaParameters, bool trackChanges)
         {
             var query = FindAll(trackChanges).Include(i => i.User).Include(i => i.Evaluation).AsQueryable();
+
             if (!string.IsNullOrWhiteSpace(title))
                 query = query.Where(i => i.Title.ToLower().Contains(title.ToLower()));
             if (category.HasValue)
@@ -32,8 +34,18 @@ namespace Repositories
                 query = query.Where(i => i.CreatedAt >= startDate.Value);
             if (userId.HasValue)
                 query = query.Where(i => i.UserId == userId.Value);
-            return await query.OrderByDescending(i => i.CreatedAt).ToListAsync();
+
+            var ideas = await query
+                .OrderByDescending(i => i.CreatedAt)
+                .Skip((ideaParameters.PageNumber - 1) * ideaParameters.PageSize)
+                .Take(ideaParameters.PageSize)
+                .ToListAsync();
+
+            var count = await query.CountAsync();
+            return new PagedList<Idea>(ideas, count, ideaParameters.PageNumber, ideaParameters.PageSize);
         }
+
+
 
         public async Task<Idea?> GetIdeaByIdAsync(int id, bool trackChanges) =>
             await FindByCondition(i => i.Id == id, trackChanges)

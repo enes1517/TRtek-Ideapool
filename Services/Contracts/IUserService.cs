@@ -14,6 +14,7 @@ namespace Services.Contracts
         Task<List<UserResponseDto>> GetAllUsersAsync();
         Task<UserResponseDto> GetUserByIdAsync(int id);
         Task UpdateUserAsync(int id, UpdateUserDto dto);
+        Task DeactivateUserAsync(int id);
     }
 
 }

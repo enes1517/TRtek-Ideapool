@@ -9,11 +9,13 @@ namespace Entities.Dtos
 {
     public class CreateIdeaDto
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
         public IdeaCategory Category { get; set; }
-        public string Benefit { get; set; }
-        public string Description { get; set; }
+        public string Benefit { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string? DocumentUrl { get; set; } // YENİ EKLENEN ALAN
     }
+
 
 
 }

@@ -23,6 +23,15 @@ namespace IdeaPool.Controllers
             await _userService.UpdateUserAsync(id, dto);
             return NoContent();
         }
+        // YENİ: PDF gereksinimi olan kullanıcı pasife alma işlemi
+        [HttpPatch("{id}/deactivate")]
+        [Authorize(Policy = "KullaniciYetkiSilme")] 
+        public async Task<IActionResult> Deactivate(int id)
+        {
+            await _userService.DeactivateUserAsync(id);
+            return NoContent();
+        }
     }
+
 
 }

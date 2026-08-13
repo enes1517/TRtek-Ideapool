@@ -44,8 +44,7 @@ Proje birbirinden bağımsız ancak tam entegre çalışan iki ana bölümden ve
 * **Yetkilendirme:** Google ile devam etme seçeneği,JWT tabanlı güvenli giriş, kayıt olma ve şifre işlemleri.
 * **Fikir Havuzu Akışı (Feed):** Platforma eklenen tüm fikirlerin kronolojik veya popülerliğe göre listelendiği, anlık arama (search) yapılabilen ana akış.
 * **Kapsamlı Fikir Ekleme:** Başlık, içerik, kategori (Departman), etkilenecek çalışan sayısı, tahmini bütçe gibi detayların yanı sıra ek belge/dosya yükleme (PDF, Görsel vb.) desteği.
-* **Etkileşim (Oylama & Yorum):** Herhangi bir fikri Yukarı (Upvote) veya Aşağı (Downvote) oylama, fikirler hakkında yorum yazarak tartışmalara katılma.
-* **Yönetici Değerlendirmesi:** Yöneticilerin; fikirleri _Fizibilite, Yenilikçilik, Finansal Etki_ gibi parametrelere göre 10 üzerinden puanladığı "Değerlendirme (Evaluation)" modülü.
+* **Yönetici Değerlendirmesi:** Yöneticilerin; fikirleri çeşitli parametrelere göre 100 üzerinden puanladığı "Değerlendirme (Evaluation)" modülü.
 * **Kişisel Profil Yönetimi:** Kullanıcının geçmişte paylaştığı fikirleri, favoriye eklediklerini ve hesap güvenlik ayarlarını (Şifre değiştirme) yönettiği alan.
 * **Yönetici (Admin) Paneli:** Kullanıcı yetkilerini (Admin / User), aktif/pasif durumlarını ve sistem kategorilerini yapılandırma yeteneği.
 

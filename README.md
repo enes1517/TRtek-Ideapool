@@ -41,7 +41,7 @@ Proje birbirinden bağımsız ancak tam entegre çalışan iki ana bölümden ve
 
 ## Ana Özellikler (Features)
 
-* **Yetkilendirme:** JWT tabanlı güvenli giriş, kayıt olma ve şifre işlemleri.
+* **Yetkilendirme:** Google ile devam etme seçeneği,JWT tabanlı güvenli giriş, kayıt olma ve şifre işlemleri.
 * **Fikir Havuzu Akışı (Feed):** Platforma eklenen tüm fikirlerin kronolojik veya popülerliğe göre listelendiği, anlık arama (search) yapılabilen ana akış.
 * **Kapsamlı Fikir Ekleme:** Başlık, içerik, kategori (Departman), etkilenecek çalışan sayısı, tahmini bütçe gibi detayların yanı sıra ek belge/dosya yükleme (PDF, Görsel vb.) desteği.
 * **Etkileşim (Oylama & Yorum):** Herhangi bir fikri Yukarı (Upvote) veya Aşağı (Downvote) oylama, fikirler hakkında yorum yazarak tartışmalara katılma.

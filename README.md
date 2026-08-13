@@ -1,6 +1,6 @@
 # TrTek Fikir Havuzu (Idea Pool)
 
-TrTek Fikir Havuzu, şirket içi çalışanların yeni fikirler önerebildiği, mevcut fikirleri oylayabildiği ve çok boyutlu (fizibilite, etki vb.) değerlendirebildiği modern, dinamik ve çapraz platform (cross-platform) bir sistemdir.
+TrTek Fikir Havuzu, şirket içi çalışanların yeni fikirler önerebildiği, mevcut fikirleri oylayabildiği ve  değerlendirebildiği modern, dinamik ve çapraz platform (cross-platform) bir sistemdir.
 
 ## Mimari Yaklaşım ve Tasarım Desenleri (Design Patterns)
 

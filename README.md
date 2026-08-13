@@ -6,7 +6,7 @@ TrTek Fikir Havuzu, şirket içi çalışanların yeni fikirler önerebildiği, 
 
 Proje, yazılım mühendisliği prensiplerine uygun, sürdürülebilir, ölçeklenebilir ve test edilebilir bir yaklaşımla geliştirilmiştir:
 
-- **N-Tier Architecture (Çok Katmanlı Mimari):** API, Services, Repositories ve Entities katmanlarına ayrılmış, sorumlulukların net olarak belirlendiği bir yapı (Separation of Concerns).
+- **N-Tier Architecture (Çok Katmanlı Mimari):** API, Services, Repositories ve Entities katmanlarına ayrılmış, Extension methodlar kullanılmış, sorumlulukların net olarak belirlendiği bir yapı (Separation of Concerns) oluşturulmuştur.
 - **Unit of Work Pattern:** Veritabanı işlemlerinin tek bir işlem bütünlüğü (transaction) içinde ele alınmasını sağlayan Unit of Work deseni `RepositoryManager` sınıfı üzerinden uygulanmıştır. Tüm veri değişiklikleri tek bir `SaveAsync()` çağrısı ile toplu halde commit edilir.
 - **Repository Pattern:** Veritabanına erişim katmanını soyutlamak için kullanılmıştır (`IRepositoryBase` -> `RepositoryBase`).
 - **Dependency Injection (DI):** Servislerin ve yöneticilerin bağımlılıklarının dışarıdan (constructor üzerinden) enjekte edildiği, gevşek bağlı (loosely coupled) yapı.

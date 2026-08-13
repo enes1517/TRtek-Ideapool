@@ -2,7 +2,17 @@
 
 TrTek Fikir Havuzu, şirket içi çalışanların yeni fikirler önerebildiği, mevcut fikirleri oylayabildiği ve çok boyutlu (fizibilite, etki vb.) değerlendirebildiği modern, dinamik ve çapraz platform (cross-platform) bir sistemdir.
 
-## Proje Mimarisi
+## Mimari Yaklaşım ve Tasarım Desenleri (Design Patterns)
+
+Proje, yazılım mühendisliği prensiplerine uygun, sürdürülebilir, ölçeklenebilir ve test edilebilir bir yaklaşımla geliştirilmiştir:
+
+- **N-Tier Architecture (Çok Katmanlı Mimari):** API, Services, Repositories ve Entities katmanlarına ayrılmış, sorumlulukların net olarak belirlendiği bir yapı (Separation of Concerns).
+- **Unit of Work Pattern:** Veritabanı işlemlerinin tek bir işlem bütünlüğü (transaction) içinde ele alınmasını sağlayan Unit of Work deseni `RepositoryManager` sınıfı üzerinden uygulanmıştır. Tüm veri değişiklikleri tek bir `SaveAsync()` çağrısı ile toplu halde commit edilir.
+- **Repository Pattern:** Veritabanına erişim katmanını soyutlamak için kullanılmıştır (`IRepositoryBase` -> `RepositoryBase`).
+- **Dependency Injection (DI):** Servislerin ve yöneticilerin bağımlılıklarının dışarıdan (constructor üzerinden) enjekte edildiği, gevşek bağlı (loosely coupled) yapı.
+- **DTO (Data Transfer Object) Pattern:** Veritabanı varlıklarının (Entities) doğrudan dışarıya açılmasını önlemek için AutoMapper kullanılarak DTO dönüşümleri sağlanır.
+
+## Proje Bileşenleri
 
 Proje birbirinden bağımsız ancak tam entegre çalışan iki ana bölümden ve bunları barındıran bir kapsayıcı (Docker) altyapıdan oluşur:
 
@@ -14,25 +24,26 @@ Proje birbirinden bağımsız ancak tam entegre çalışan iki ana bölümden ve
 **Backend (Sunucu Tarafı):**
 - **Platform:** .NET 8 (C#) & ASP.NET Core Web API
 - **Veritabanı:** PostgreSQL (Entity Framework Core ile Code-First entegrasyonu)
-- **Güvenlik:** JWT (JSON Web Token) kimlik doğrulaması
-- **Mimari:** Repository Pattern & N-Tier Architecture
+- **Güvenlik:** JWT (JSON Web Token) kimlik doğrulaması & Role-Based Access Control
+- **Mapping:** AutoMapper
+- **Dokümantasyon:** Swagger (OpenAPI)
 
 **Frontend (Kullanıcı Arayüzü):**
 - **Platform:** Flutter (Dart)
 - **State Management:** Riverpod (`flutter_riverpod`)
-- **Navigasyon:** GoRouter
-- **Tasarım:** Material Design 3, Google Fonts (Inter vb.)
-- **Diğer Eklentiler:** File Picker (dosya yükleme), SVG desteği, URL Launcher
+- **Navigasyon:** GoRouter (Ağaç yapılı, deep-link destekli modern routing)
+- **Tasarım:** Material Design 3, Google Fonts (Inter)
+- **Paketler:** File Picker (doküman seçimi), SVG desteği, URL Launcher, HTTP Client
 
 **Altyapı (DevOps):**
 - Docker & Docker Compose
-- Nginx (Web İstemci Sunucusu)
+- Nginx (Web İstemci Sunucusu ve Reverse Proxy)
 
 ## Ana Özellikler (Features)
 
 * **Yetkilendirme:** JWT tabanlı güvenli giriş, kayıt olma ve şifre işlemleri.
 * **Fikir Havuzu Akışı (Feed):** Platforma eklenen tüm fikirlerin kronolojik veya popülerliğe göre listelendiği, anlık arama (search) yapılabilen ana akış.
-* **Kapsamlı Fikir Ekleme:** Başlık, içerik, kategori (Departman), etkilenecek çalışan sayısı, tahmini bütçe gibi detayların yanı sıra ek belge/dosya yükleme desteği.
+* **Kapsamlı Fikir Ekleme:** Başlık, içerik, kategori (Departman), etkilenecek çalışan sayısı, tahmini bütçe gibi detayların yanı sıra ek belge/dosya yükleme (PDF, Görsel vb.) desteği.
 * **Etkileşim (Oylama & Yorum):** Herhangi bir fikri Yukarı (Upvote) veya Aşağı (Downvote) oylama, fikirler hakkında yorum yazarak tartışmalara katılma.
 * **Yönetici Değerlendirmesi:** Yöneticilerin; fikirleri _Fizibilite, Yenilikçilik, Finansal Etki_ gibi parametrelere göre 10 üzerinden puanladığı "Değerlendirme (Evaluation)" modülü.
 * **Kişisel Profil Yönetimi:** Kullanıcının geçmişte paylaştığı fikirleri, favoriye eklediklerini ve hesap güvenlik ayarlarını (Şifre değiştirme) yönettiği alan.
@@ -47,18 +58,18 @@ Projeyi kendi bilgisayarınızda çalıştırmak için ekstra bir bağımlılık
 
 ### Adımlar
 
-1. Terminali (veya komut satırını) açın ve projenin ana klasörüne gidin (örneğin `docker-compose.yml` dosyasının bulunduğu yer).
+1. Terminali (veya komut satırını) açın ve projenin ana klasörüne gidin (`docker-compose.yml` dosyasının bulunduğu yer).
    ```bash
    cd "TrTek Fikir Havuzu"
    ```
 
-2. Tüm servisleri arka planda inşa edip başlatmak için aşağıdaki komutu çalıştırın:
+2. Tüm servisleri (API, Veritabanı, Web Arayüzü) arka planda inşa edip başlatmak için aşağıdaki komutu çalıştırın:
    ```bash
    docker-compose up -d --build
    ```
 
 3. Kurulum tamamlandığında aşağıdaki adreslerden sisteme erişebilirsiniz:
-   - **Web Uygulaması (Frontend):** [https://localhost:8443](https://localhost:8443) (Sertifika uyarısı verirse gelişmiş ayarlardan devam et diyebilirsiniz)
+   - **Web Uygulaması (Frontend):** [https://localhost:8443](https://localhost:8443) (Sertifika uyarısı verirse "Gelişmiş ayarlar" kısmından güvenli kabul edip devam edebilirsiniz)
    - **Web Uygulaması Alternatif:** [http://localhost:8080](http://localhost:8080)
    - **Backend API Swagger Paneli:** [http://localhost:5139/swagger](http://localhost:5139/swagger)
 
@@ -85,6 +96,6 @@ Platform aynı zamanda tam bir mobil uygulama olarak çalışır. Android cihazl
 
 ## Geliştirici Yönergeleri
 
-- Projenin Flutter (Frontend) kısmı **Feature-Based (Özellik Odaklı)** yapıdadır. Yeni bir ekran veya işlev eklerken `lib/features` altına modülün ismine özel (örn. `auth`, `idea`, `profile`) bir klasör açıp kendi `views`, `providers`, `widgets` klasörlerini oluşturun.
-- Uygulama genelinde kullanılacak bağımsız bileşenler (butonlar, renk paleti vb.) `lib/core` klasöründedir. Arayüzün standart ve tutarlı kalması için buradan beslenin.
-- API'ye yeni bir istek atılacaksa bunu doğrudan sayfa (view) içinde değil, `lib/api_service.dart` (veya ilgili Repository dosyası) içinde fonksiyonlaştırıp Riverpod provider'ları aracılığıyla sayfaya bağlayın.
+- **Frontend (Flutter):** Projenin Flutter kısmı **Feature-Based (Özellik Odaklı)** yapıdadır. Yeni bir modül eklerken `lib/features` altına o modüle özel (örn. `auth`, `idea`, `profile`) bir klasör açıp kendi `views`, `providers`, `widgets` klasörlerini oluşturun.
+- **Ortak Bileşenler:** Uygulama genelinde kullanılacak bağımsız bileşenler (butonlar, text inputlar, renk paleti vb.) `lib/core` klasöründedir.
+- **Backend (API):** Veritabanı ile ilgili işlemleri `Repositories` katmanında `RepositoryBase`'den türeterek oluşturun. Verileri API'ye sunmadan önce mutlaka `Services` katmanında iş mantığından geçirin ve AutoMapper ile DTO'lara dönüştürün. Controller'lar doğrudan Repository'leri çağırmamalıdır.

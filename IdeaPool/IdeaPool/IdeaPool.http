@@ -1,0 +1,6 @@
+@IdeaPool_HostAddress = http://localhost:5139
+
+GET {{IdeaPool_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

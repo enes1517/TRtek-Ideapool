@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Entities/Entities.csproj" Id="fbf81eb4-95ea-4f8e-b497-fd8df9a52ea7" />
+  <Project Path="IdeaPool/IdeaPool.csproj" />
+  <Project Path="Repositories/Repositories.csproj" Id="ff6bb781-a678-4571-bad5-03c236e4b374" />
+  <Project Path="Services/Services.csproj" Id="5a2bbea3-603f-4129-93db-980ed445439c" />
+</Solution>
